@@ -2,7 +2,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { LearningType, Activity, Course, ModalityType, ABCDefinition, BloomLevel, ICAPLevel } from './types';
 import { ABC_TYPES, ICAP_DEFINITIONS } from './constants';
-import { generateScenario } from './services/geminiService';
 import ActivityCard from './components/ActivityCard';
 import LearningProfileChart from './components/LearningProfileChart';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, Cell, PieChart, Pie, Legend, LabelList } from 'recharts';
@@ -40,7 +39,6 @@ const getFreshInitialState = (): Course => ({
 
 const App: React.FC = () => {
   const [course, setCourse] = useState<Course>(getFreshInitialState());
-  const [isGenerating, setIsGenerating] = useState(false);
   const [activeTab, setActiveTab] = useState<'design' | 'analytics' | 'summary'>('design');
   const [dragOverCell, setDragOverCell] = useState<{ week: number; mode: ModalityType } | null>(null);
   const [editingActivity, setEditingActivity] = useState<Activity | null>(null);
@@ -134,31 +132,6 @@ const App: React.FC = () => {
     setEditingActivity({ ...editingActivity, bloomLevels: isAlreadySelected ? [] : [level] });
   };
 
-  const handleAISuggest = async () => {
-    if (!course.title) return alert("Donnez un titre au cours");
-    setIsGenerating(true);
-    try {
-      const suggestions = await generateScenario(course.title, course.targetAudience, course.numWeeks);
-      const mapped = suggestions.map(s => ({
-        id: Math.random().toString(36).substr(2, 9),
-        type: (s.type as LearningType) || LearningType.ACQUISITION,
-        icapLevel: (s.icapLevel as ICAPLevel) || 'Actif',
-        title: s.title || "Titre suggéré",
-        description: s.description || "Description suggérée",
-        duration: s.duration || 15,
-        mode: (s.mode as ModalityType) || 'F2F',
-        week: s.week || 1,
-        objectives: s.objectives || "",
-        taskType: s.taskType || "Individuel",
-        cardNumber: "",
-        bloomLevels: [],
-        material: "",
-        demarche: []
-      }));
-      setCourse(prev => ({ ...prev, activities: [...prev.activities, ...mapped] }));
-    } catch (err) { alert("Erreur IA"); } finally { setIsGenerating(false); }
-  };
-
   const onDrop = (e: React.DragEvent, week: number, mode: ModalityType) => {
     e.preventDefault();
     setDragOverCell(null);
@@ -223,7 +196,10 @@ const App: React.FC = () => {
                     La méthode ABC repose sur <strong>6 types d'activités d'apprentissage</strong>. L'objectif est de créer un équilibre entre ces types pour maximiser l'engagement et l'efficacité pédagogique.
                   </p>
                   <div className="p-3 bg-indigo-50 rounded-2xl border border-indigo-100">
-                    <p className="text-[11px] text-indigo-800 font-bold italic">"Glissez-déposez les cartes depuis la gauche vers la matrice pour planifier votre formation."</p>
+                    <p className="text-[11px] text-indigo-800 font-bold italic">
+                      "Glissez-déposez les cartes depuis la gauche vers la matrice pour planifier votre formation. <br />
+                      Cliquez sur un des modes d'apprentissage de la rubrique cartes ABC pour obtenir sa description détaillée"
+                    </p>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-2">
@@ -477,7 +453,6 @@ const App: React.FC = () => {
           </div>
           <div className="flex items-center space-x-6">
             <div className="text-right border-r border-slate-100 pr-6"><div className="text-[10px] text-slate-400 font-bold uppercase">Volume Horaire</div><div className="text-sm font-black text-slate-800">{Math.floor(totalDuration/60)}h {totalDuration % 60}m</div></div>
-            <button onClick={handleAISuggest} disabled={isGenerating} className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-black uppercase tracking-widest disabled:opacity-50 shadow-md transition-all active:scale-95">{isGenerating ? "Génération..." : "Aide IA"}</button>
           </div>
         </div>
       </header>
