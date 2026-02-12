@@ -296,6 +296,12 @@ const App: React.FC = () => {
                       Taxonomie de l'engagement cognitif via les comportements manifestes.
                     </p>
                   </div>
+                  <div className="p-4 bg-white rounded-3xl border border-slate-100 shadow-sm space-y-2 md:col-span-2">
+                    <h4 className="text-[10px] font-black uppercase text-indigo-600 tracking-wider">Créateur</h4>
+                    <p className="text-[10px] text-slate-600 leading-relaxed font-medium">
+                      <strong>Pascal PAGNY</strong> : <a href="mailto:pascal.pagny@ac-paris.fr" className="hover:text-indigo-600 transition-colors">pascal.pagny@ac-paris.fr</a>
+                    </p>
+                  </div>
                 </div>
               </section>
             </div>
@@ -467,7 +473,7 @@ const App: React.FC = () => {
         <div className="max-w-[1600px] mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <div className="bg-indigo-600 text-white p-2.5 rounded-2xl shadow-lg"><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg></div>
-            <div className="flex flex-col"><h1 className="text-[10px] font-black tracking-widest text-slate-400 uppercase mb-1">Dossier ABC + ICAP</h1><input type="text" value={course.title} onChange={(e) => setCourse({...course, title: e.target.value})} placeholder="Titre de la formation..." className="bg-transparent border-none p-0 text-xl font-black text-slate-900 w-[400px] outline-none" /></div>
+            <div className="flex flex-col"><h1 className="text-[10px] font-black tracking-widest text-slate-400 uppercase mb-1">Scénarisation de la formation hybride</h1><input type="text" value={course.title} onChange={(e) => setCourse({...course, title: e.target.value})} placeholder="Titre de la formation..." className="bg-transparent border-none p-0 text-xl font-black text-slate-900 w-[400px] outline-none" /></div>
           </div>
           <div className="flex items-center space-x-6">
             <div className="text-right border-r border-slate-100 pr-6"><div className="text-[10px] text-slate-400 font-bold uppercase">Volume Horaire</div><div className="text-sm font-black text-slate-800">{Math.floor(totalDuration/60)}h {totalDuration % 60}m</div></div>
