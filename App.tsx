@@ -60,7 +60,7 @@ const App: React.FC = () => {
       cardNumber: "",
       bloomLevels: [],
       material: "",
-      demarche: [],
+      demarche: 'Individuelle',
       icapLevel: 'Actif'
     };
     setCourse(prev => ({ ...prev, activities: [...prev.activities, newActivity] }));
@@ -422,6 +422,22 @@ const App: React.FC = () => {
                  <div className="backface-hidden absolute inset-0 rotate-y-180 bg-white p-6 space-y-6 overflow-y-auto">
                     <div><label className="text-[10px] font-black text-slate-400 uppercase block mb-2">Modalité</label><div className="flex gap-2">{Object.keys(MODALITY_LABELS).map(m => <button key={m} onClick={() => setEditingActivity({...editingActivity, mode: m as any})} className={`flex-1 p-3 rounded-xl text-[10px] font-black uppercase transition-all ${editingActivity.mode === m ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-50 text-slate-400'}`}>{MODALITY_LABELS[m as ModalityType]}</button>)}</div></div>
                     
+                    {/* Rubrique Démarche */}
+                    <div>
+                      <label className="text-[10px] font-black text-slate-400 uppercase block mb-2">Type de démarche</label>
+                      <div className="flex gap-2">
+                        {(['Individuelle', 'Collective'] as const).map(d => (
+                          <button 
+                            key={d} 
+                            onClick={() => setEditingActivity({...editingActivity, demarche: d})} 
+                            className={`flex-1 p-3 rounded-xl text-[10px] font-black uppercase transition-all ${editingActivity.demarche === d ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-50 text-slate-400'}`}
+                          >
+                            {d}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
                     {/* Rubrique Matériel */}
                     <div>
                       <label className="text-[10px] font-black text-slate-400 uppercase block mb-2">Matériel</label>
@@ -438,7 +454,7 @@ const App: React.FC = () => {
                </div>
             </div>
             <div className="p-8 bg-slate-50/50 border-t border-slate-100 flex justify-between items-center shrink-0">
-              <button onClick={() => { deleteActivity(editingActivity.id); setEditingActivity(null); }} className="text-[10px] font-black uppercase text-red-500 hover:text-red-700 transition-colors">Supprimer l'activité</button>
+              <button onClick={() => { deleteActivity(editingActivity.id); setEditingActivity(null); }} className="text-[10px] font-black uppercase text-red-500 hover:text-red-700 transition-colors">Supprimer l'activity</button>
               <button onClick={() => updateActivity(editingActivity)} className="px-10 py-3 bg-indigo-600 text-white rounded-2xl font-black uppercase text-[11px] shadow-xl hover:bg-indigo-700 transition-all">Enregistrer</button>
             </div>
           </div>
@@ -693,6 +709,10 @@ const App: React.FC = () => {
                                </div>
                                <div className="p-6 bg-white rounded-3xl border border-slate-100 shadow-xs">
                                   <span className="text-[9px] font-black uppercase text-slate-400 block mb-3 tracking-widest">Détails (Verso)</span>
+                                  <div className="mb-4">
+                                      <span className="text-[8px] font-black uppercase text-slate-300 block mb-1">Démarche :</span>
+                                      <p className="text-xs text-slate-700 font-bold">{a.demarche || "Individuelle"}</p>
+                                  </div>
                                   {a.material && (
                                     <div className="mb-4">
                                       <span className="text-[8px] font-black uppercase text-slate-300 block mb-1">Matériel :</span>

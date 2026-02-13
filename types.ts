@@ -26,7 +26,7 @@ export interface Activity {
   taskType?: string;
   cardNumber?: string;
   bloomLevels?: BloomLevel[];
-  demarche?: ('Individuelle' | 'Collective')[];
+  demarche?: 'Individuelle' | 'Collective';
   material?: string;
   icapLevel?: ICAPLevel;
 }

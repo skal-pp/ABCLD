@@ -183,7 +183,7 @@ const ActivityCard: React.FC<Props> = ({ activity, onDelete, onEdit, onMove, onR
           className="backface-hidden rotate-y-180 absolute inset-0 flex border border-slate-200 rounded-xl overflow-hidden shadow-sm cursor-default p-4 flex-col h-full bg-white"
           style={{ backgroundColor: def.bgLight }}
         >
-          <div className="flex justify-between items-center mb-3 shrink-0">
+          <div className="flex justify-between items-center mb-2 shrink-0">
             <span className="text-[10px] font-black uppercase tracking-widest" style={{ color: def.color }}>Détails de l'activité</span>
             <button 
               onClick={toggleFlip}
@@ -196,11 +196,17 @@ const ActivityCard: React.FC<Props> = ({ activity, onDelete, onEdit, onMove, onR
             </button>
           </div>
           
-          <div className="flex-1 overflow-y-auto pr-1 scrollbar-thin space-y-3">
+          <div className="flex-1 overflow-y-auto pr-1 scrollbar-thin space-y-2">
+            <div>
+              <span className="text-[9px] font-black uppercase text-slate-500 block mb-1">Démarche :</span>
+              <p className="text-[11px] text-slate-700 font-bold bg-white/50 p-1.5 rounded-lg border border-white/40">
+                {activity.demarche || "Individuelle"}
+              </p>
+            </div>
             {activity.material && (
               <div>
                 <span className="text-[9px] font-black uppercase text-slate-500 block mb-1">Matériel :</span>
-                <p className="text-[11px] text-slate-700 leading-tight font-bold bg-white/50 p-2 rounded-lg border border-white/40">
+                <p className="text-[11px] text-slate-700 leading-tight font-bold bg-white/50 p-1.5 rounded-lg border border-white/40">
                   {activity.material}
                 </p>
               </div>
@@ -213,7 +219,7 @@ const ActivityCard: React.FC<Props> = ({ activity, onDelete, onEdit, onMove, onR
             </div>
           </div>
 
-          <div className="mt-4 flex justify-between items-center shrink-0 pt-3 border-t border-black/5 no-print">
+          <div className="mt-2 flex justify-between items-center shrink-0 pt-2 border-t border-black/5 no-print">
             <button 
               onClick={(e) => { e.stopPropagation(); onDelete(activity.id); }}
               className="text-[10px] font-black uppercase text-red-500 hover:text-red-700 transition-colors"
@@ -222,7 +228,7 @@ const ActivityCard: React.FC<Props> = ({ activity, onDelete, onEdit, onMove, onR
             </button>
             <button 
               onClick={() => { onEdit(activity); }}
-              className="px-4 py-2 bg-white text-slate-900 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-all border border-slate-200 shadow-sm"
+              className="px-4 py-1.5 bg-white text-slate-900 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-all border border-slate-200 shadow-sm"
             >
               Éditer
             </button>
